@@ -119,5 +119,15 @@ namespace Jumper
         {
 
         }
+
+        private void LViewProduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void AddAgent_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
