@@ -35,8 +35,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -59,6 +68,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="EditPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -69,6 +82,64 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Classes\Entities.cs" />
+    <Compile Include="EditPage.xaml.cs">
+      <DependentUpon>EditPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Agent.cs">
+      <DependentUpon>JumpDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AgentPriorityHistory.cs">
+      <DependentUpon>JumpDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\AgentType.cs">
+      <DependentUpon>JumpDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\JumpDB.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>JumpDB.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\JumpDB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>JumpDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\JumpDB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>JumpDB.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Material.cs">
+      <DependentUpon>JumpDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\MaterialCountHistory.cs">
+      <DependentUpon>JumpDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\MaterialType.cs">
+      <DependentUpon>JumpDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Product.cs">
+      <DependentUpon>JumpDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\ProductCostHistory.cs">
+      <DependentUpon>JumpDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\ProductMaterial.cs">
+      <DependentUpon>JumpDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\ProductSale.cs">
+      <DependentUpon>JumpDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\ProductType.cs">
+      <DependentUpon>JumpDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Shop.cs">
+      <DependentUpon>JumpDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Supplier.cs">
+      <DependentUpon>JumpDB.tt</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -93,6 +164,14 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EntityDeploy Include="Entity\JumpDB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>JumpDB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Entity\JumpDB.edmx.diagram">
+      <DependentUpon>JumpDB.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -238,6 +317,22 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="res\product\picture.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Entity\JumpDB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>JumpDB.Context.cs</LastGenOutput>
+      <DependentUpon>JumpDB.edmx</DependentUpon>
+    </Content>
+    <Content Include="Entity\JumpDB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>JumpDB.edmx</DependentUpon>
+      <LastGenOutput>JumpDB.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

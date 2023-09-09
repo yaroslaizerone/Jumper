@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Jumper.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,36 +16,20 @@ using System.Windows.Shapes;
 
 namespace Jumper
 {
-    public class Helper
-    {
-        public static Entities ent;
-        internal static bool flag = false;
-        internal static int prioritet = 0;
-
-        public static Entities GetContext()
-        {
-            if (ent == null)
-            {
-                ent = new Entities();
-            }
-            return ent;
-        }
-    }
     
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
-            frame.Content = new PageOne(frame);
+            frame.Navigate(new AgentPage());
         }
 
         private void frame_LoadCompleted(object sender, NavigationEventArgs e)
         {
             try
             {
-                PageOne pg = (PageOne)e.Content;
-                pg.Load();
+                AgentPage pg = (AgentPage)e.Content;
             }
             catch { };
         }

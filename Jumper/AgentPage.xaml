@@ -29,10 +29,16 @@
         </Grid.RowDefinitions>
 
         <TextBox x:Name="textSearch" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="5,0,5,0" SelectionChanged = "textSearch_SelectionChanged" Height="22"/>
-        <ComboBox Name="cmbSorting" Grid.Row="1" Grid.Column="1" SelectedIndex="0" VerticalAlignment="Center" Margin="5, 0, 5, 0" ItemsSource="{Binding SortingList}" SelectionChanged ="cmbSorting_SelectionChanged"/>
+        <ComboBox Name="cmbSorting" Grid.Row="1" Grid.Column="1" SelectedIndex="0" VerticalAlignment="Center" Margin="5, 0, 5, 0"  ItemsSource="{Binding SortingList}" SelectionChanged ="cmbSorting_SelectionChanged"/>
         <ComboBox Name="cmbFilter" Grid.Column="2" Grid.Row="1" SelectedIndex="0" VerticalAlignment="Center" Margin="5, 0, 5, 0" ItemsSource="{Binding FilterList}" SelectionChanged ="cmbFilter_SelectionChanged"/>
 
-        <ListView x:Name="LViewProduct" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" Margin="5, 5, 5, 5" d:ItemsSource="{d:SampleData ItemCount=1}" SelectionChanged="LViewProduct_SelectionChanged">
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock x:Name="textResultAmount"/>
+            <TextBlock Text=" из "/>
+            <TextBlock x:Name="textAllAmount"/>
+        </StackPanel>
+
+        <ListView x:Name="LViewAgent" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" Margin="5, 5, 5, 5" d:ItemsSource="{d:SampleData ItemCount=1}" SelectionChanged="LViewProduct_SelectionChanged">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -47,16 +53,16 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition Width="120"/>
                             </Grid.ColumnDefinitions>
-                            <Image Width="180" Height="100" Margin="10,14,10,14" Source="{Binding ImgPath, FallbackValue={StaticResource deafualtImage}}"/>
+                            <Image Width="180" Height="100" Margin="10,14,10,14" Source="{Binding Img, FallbackValue={StaticResource deafualtImage}}"/>
 
-                            <StackPanel Grid.Column="1" Margin="5,5,5,5">
+                            <StackPanel Grid.Column="1" Margin="10,5,5,5" VerticalAlignment="Center">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding AgentType}" FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding AgentTypeThis}" FontWeight="Bold"/>
                                     <TextBlock Text=" | "/>
                                     <TextBlock Text="{Binding Title}"/>
                                 </StackPanel>
                                 <TextBlock Text="{Binding CountProductSale, StringFormat= '\{0}% за год'}"/>
-                                <TextBlock Text="{Binding PhoneNumber, StringFormat= '\+7: {0}'}"/>
+                                <TextBlock Text="{Binding Phone, StringFormat= '\+7 {0}'}"/>
                                 <TextBlock Text="{Binding Priority, StringFormat= '\Приоритетность: {0}'}"/>
                             </StackPanel>
                             <StackPanel Grid.Column="2" VerticalAlignment="Center">
@@ -75,13 +81,9 @@
         <Button x:Name="AddAgent" Grid.Row="3" Grid.Column="0" Content="Добавить агента" Visibility="Visible" HorizontalAlignment="Left" Width="200" Margin="20, 0, 0, 0" Click="AddAgent_Click"/>
         <Button x:Name="ResetCountAgent" Grid.Row="3" Grid.Column="1" Content="Изменить параметры"  HorizontalAlignment="Left" Width="200" Margin="20, 0, 0, 0" Visibility="Visible" Click="btnUpdateOrder_Click"/>
         <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <TextBlock x:Name="Back" Text="&lt;"/>
-            <TextBlock x:Name="page1" Text=" 1 "/>
-            <TextBlock x:Name="page2" Text=" 2 "/>
-            <TextBlock x:Name="page3" Text=" 3 "/>
-            <TextBlock x:Name="page4" Text=" 4 "/>
-            <TextBlock x:Name="page5" Text=" 5 "/>
-            <TextBlock x:Name="Next" Text="&gt;"/>
+            <Button x:Name="Back" Content="&lt;" Click="Back_Click"/>
+            <TextBlock x:Name="PagesCount" Text=" 1 " Visibility="Collapsed"/>
+            <Button x:Name="Next" Content="&gt;" Click="Next_Click"/>
         </StackPanel>
     </Grid>
 </Page>
