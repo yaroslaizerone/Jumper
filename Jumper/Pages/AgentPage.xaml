@@ -38,7 +38,7 @@
             <TextBlock x:Name="textAllAmount"/>
         </StackPanel>
 
-        <ListView x:Name="LViewAgent" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" Margin="5, 5, 5, 5" d:ItemsSource="{d:SampleData ItemCount=1}" SelectionChanged="LViewProduct_SelectionChanged">
+        <ListView x:Name="LViewAgent" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" Margin="5, 5, 5, 5" d:ItemsSource="{d:SampleData ItemCount=1}">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -74,13 +74,14 @@
             </ListView.ItemTemplate>
             <ListView.ContextMenu>
                 <ContextMenu Name="contextMenu">
-                    <MenuItem Name="btnAddProduct" Header="Добавить к заказу" Click="btnAddProduct_Click"/>
+                    <MenuItem Name="EditPriority" Header="Изменить приорететность" Click="EditPriority_Click"/>
                 </ContextMenu>
             </ListView.ContextMenu>
         </ListView>
-        <Button x:Name="AddAgent" Grid.Row="3" Grid.Column="0" Content="Добавить агента" Visibility="Visible" HorizontalAlignment="Left" Width="200" Margin="20, 0, 0, 0" Click="AddAgent_Click"/>
-        <Button x:Name="ResetCountAgent" Grid.Row="3" Grid.Column="1" Content="Изменить параметры"  HorizontalAlignment="Left" Width="200" Margin="20, 0, 0, 0" Visibility="Visible" Click="btnUpdateOrder_Click"/>
-        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <Button x:Name="DeleteAgent" Height="auto" Width="auto" Grid.Column="2" Grid.Row ="3" Content="Удалить" Click="DeleteAgent_Click" Foreground="Black" FontSize="16" Margin="5,0,5,0"/>
+        <Button x:Name="AddAgent" Grid.Row="3" Grid.Column="0" Content="Добавить агента" Visibility="Visible"  Height="auto" Width="auto"  FontSize="16" Margin="5,0,5,0" Click="AddAgent_Click"/>
+        <Button x:Name="ResetCountAgent" Grid.Row="3" Grid.Column="1" Content="Изменить параметры" Height="auto" Width="auto" FontSize="16" Margin="5,0,5,0" Visibility="Visible" Click="Update_Click"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="23" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Button x:Name="Back" Content="&lt;" Click="Back_Click"/>
             <TextBlock x:Name="PagesCount" Text=" 1 " Visibility="Collapsed"/>
             <Button x:Name="Next" Content="&gt;" Click="Next_Click"/>

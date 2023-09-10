@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Jumper.Windows;
 
 namespace Jumper
 {
@@ -30,6 +31,15 @@ namespace Jumper
             try
             {
                 AgentPage pg = (AgentPage)e.Content;
+            }
+            catch { };
+        }
+
+        private void Backbtn_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                frame.GoBack();
             }
             catch { };
         }

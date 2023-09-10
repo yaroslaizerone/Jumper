@@ -1,7 +1,9 @@
 ﻿using Jumper.Classes;
 using Jumper.Entity;
+using Jumper.Windows;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Windows;
@@ -14,6 +16,7 @@ namespace Jumper
         private int start = 0;
         private int fullCount = 0;
         private int SeePages = 3;
+        public Agent SelectedAgent = new Agent();
         private List<int> DirPage = new List<int>();
         List<Agent> Agents = new List<Agent>();
         public AgentPage()
@@ -22,27 +25,9 @@ namespace Jumper
             Load();
         }
 
-        public string[] SortingList { get; set; } =
-        {
-            "Без сортировки",
-            "По возрастанию",
-            "По убыванию",
-            "По возрастанию приоритета",
-            "По убыванию приоритета"
-        };
-        public string[] FilterList { get; set; } =
-        {
-            "---",
-            "ЗАО",
-            "МКК",
-            "МФО",
-            "ОАО",
-            "ООО",
-            "ПАО"
-        };
-
         public void Load()
         {
+            start = 0;
             Agents = Entities.GetContext().Agent.OrderBy(Agent => Agent.ID).Skip(start * 10).Take(10).ToList();
             LViewAgent.ItemsSource = Agents;
             DataContext = this;
@@ -65,16 +50,16 @@ namespace Jumper
 
         private void Next_Click(object sender, RoutedEventArgs e)
         {
-            if (start < 10) 
+            if (start < (fullCount / 10)) 
             {
                 start++;
+                //MessageBox.Show($"{start}");
                 Agents = Entities.GetContext().Agent.OrderBy(Agent => Agent.ID).Skip(start * 10).Take(10).ToList();
                 LViewAgent.ItemsSource = Agents;
                 textResultAmount.Text = $"{Convert.ToInt32(textResultAmount.Text) + Agents.Count}";
                 SeePages++;
                 CheckPages(SeePages);
             }
-            
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)
@@ -102,80 +87,6 @@ namespace Jumper
             }
         }
 
-        private void turnButton()
-        {
-            
-        }
-
-        private void updateButton_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
-        private void addButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void revButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void deleteButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void forward_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
-        
-
-        private void searchTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void SelectAgentType_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void LViewProduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void AddAgent_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void textSearch_SelectionChanged(object sender, RoutedEventArgs e)
-        {
-            Upload();
-        }
-
-        private void cmbSorting_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ComboBox comboBox = sender as ComboBox;
-            if (comboBox != null)
-            {
-                Upload();
-            }
-        }
-
-        private void cmbFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ComboBox comboBox = sender as ComboBox;
-            if (comboBox != null)
-            {
-                Upload();
-            }
-        }
-
         public void Upload() 
         {
             var result = Entities.GetContext().Agent.ToList(); //Принимаем данные из таблицы Agents в переменную
@@ -200,7 +111,6 @@ namespace Jumper
             {
                 result = result.OrderByDescending(agent => agent.Priority).Skip(start * 10).Take(10).ToList();
             }
-
 
             if (cmbFilter.SelectedIndex == 0) //Обработка по организациям
             {}
@@ -230,20 +140,112 @@ namespace Jumper
             }
 
             result = result.Where(x => x.Title.ToLower().Contains(textSearch.Text.ToLower())).ToList();//Реализация поиска
-            LViewAgent.ItemsSource = result; //Передаём результат в ListView
+            LViewAgent.ItemsSource = result; //Передача результат в ListView
 
-            textResultAmount.Text = result.Count.ToString();//Передём количество записей после применения поиска, сортировки, фильтрации
+            textResultAmount.Text = result.Count.ToString();//Передача количество записей после применения поиска, сортировки, фильтрации
         }
 
-        private void btnUpdateOrder_Click(object sender, RoutedEventArgs e)
+        private void AddAgent_Click(object sender, RoutedEventArgs e)
         {
-
+            NavigationService.Navigate(new EditPage(null));
         }
 
-        private void btnAddProduct_Click(object sender, RoutedEventArgs e)
+        private void Update_Click(object sender, RoutedEventArgs e)
         {
-
+            SelectedAgent = LViewAgent.SelectedItem as Agent;
+            try
+            {
+                NavigationService.Navigate(new EditPage(SelectedAgent));
+            }
+            catch 
+            {
+                MessageBox.Show("Выберите агента!");
+            };
+            
         }
 
+        private void textSearch_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            Upload();
+        }
+
+        private void cmbSorting_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox comboBox = sender as ComboBox;
+            if (comboBox != null)
+            {
+                Upload();
+            }
+        }
+
+        private void cmbFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox comboBox = sender as ComboBox;
+            if (comboBox != null)
+            {
+                Upload();
+            }
+        }
+
+        public string[] SortingList { get; set; } =
+        {
+            "Без сортировки",
+            "По возрастанию",
+            "По убыванию",
+            "По возрастанию приоритета",
+            "По убыванию приоритета"
+        };
+
+        public string[] FilterList { get; set; } =
+        {
+            "---",
+            "ЗАО",
+            "МКК",
+            "МФО",
+            "ОАО",
+            "ООО",
+            "ПАО"
+        };
+
+        private void EditPriority_Click(object sender, RoutedEventArgs e)
+        {
+            if (LViewAgent.SelectedItems.Count > 0)
+            {
+                int prt = 0;
+                foreach (Agent agent in LViewAgent.SelectedItems)
+                {
+                    if (agent.Priority > prt) prt = agent.Priority;
+                }
+                ModWindow dlg = new ModWindow(prt);
+                Entities.prioritet = prt;
+                Entities.flag = false;
+                dlg.ShowDialog();
+                if (Entities.flag)
+                {
+                    foreach (Agent agent in LViewAgent.SelectedItems)
+                    {
+                        agent.Priority = Entities.prioritet;
+                        Entities.GetContext().Entry(agent).State = EntityState.Modified;
+                    }
+                    Entities.GetContext().SaveChanges();
+                    Load();
+                }
+            }
+        }
+
+        private void DeleteAgent_Click(object sender, RoutedEventArgs e)
+        {
+            if (LViewAgent.SelectedItem != null)
+            {
+                Agent selectedAgent = (Agent)LViewAgent.SelectedItem; // Получение контекста базы данных.
+                var context = Entities.GetContext(); // Нахождение всех записе в таблице ProductSale, связанные с удаляемым агентом.
+                var relatedSales = context.ProductSale.Where(sale => sale.AgentID == selectedAgent.ID).ToList(); // Удаление найденной записи из таблицы ProductSale.
+                context.ProductSale.RemoveRange(relatedSales); // Затем удаление записи из таблицы Agent.
+                context.Agent.Remove(selectedAgent); // Сохрание изменения в базе данных.
+                context.SaveChanges();
+                MessageBox.Show("Удаление прошло успешно");
+                Load();
+            }
+        }
     }
 }

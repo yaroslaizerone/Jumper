@@ -6,13 +6,13 @@
         xmlns:local="clr-namespace:Jumper"
         
         mc:Ignorable="d"
-        Title="PrimeryWindow" Icon="res/logo/logo.ico" Height="600" Width="800" MinHeight="600" MinWidth="800">
+        Title="PrimeryWindow" Icon="/res/logo/logo.ico" Height="600" Width="800" MinHeight="600" MinWidth="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Border BorderThickness="5" BorderBrush="Aqua" Grid.ColumnSpan="2">
+        <Border BorderThickness="1" BorderBrush="Black" Grid.ColumnSpan="2">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"></RowDefinition>
@@ -20,7 +20,7 @@
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0" Background="Gray" Height="auto" Width="auto">
-
+                    <Button x:Name="Backbtn" Content="&lt;" HorizontalAlignment="Left" Margin="5,5,5,0" Height="30" Width="30" Click="Backbtn_Click"/>
                 </StackPanel>
                 <StackPanel Grid.Row="2" Background="Gray" Height="auto" Width="auto">
 
