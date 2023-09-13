@@ -66,5 +66,24 @@ namespace Jumper.Entity
                     .Sum(); return count;
             }
         }
+        public int GetProcent
+        {
+            get 
+            {
+                var count = Classes.Entities.GetContext().ProductSale
+                    .Where(p => p.AgentID == this.ID);
+                decimal cost = 0;
+                foreach (ProductSale ps in count) 
+                {
+                    cost += ps.Product.MinCostForAgent * ps.ProductCount;
+                }
+                int procent = 0;
+                if (cost >= 10000 && cost < 50000) procent = 5;
+                if (cost >= 50000 && cost < 150000) procent = 10;
+                if (cost >= 150000 && cost < 500000) procent = 20;
+                if (cost >= 500000) procent = 25;
+                return procent;
+            }
+        }
     }
 }
